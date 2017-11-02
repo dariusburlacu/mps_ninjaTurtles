@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MageTower : MonoBehaviour {
+public class WatchTower : MonoBehaviour {
     #region variables
     public Transform target;
 
@@ -12,7 +12,7 @@ public class MageTower : MonoBehaviour {
     private float fireCountdown = 0f;
 
     [Header("Unity Setup Fields")]
-    public Transform MageTowerUnit;
+    public Transform WatchTowerUnit;
 
     //tag for what object type to follow
     public string enemyTag = "Enemy";
@@ -25,8 +25,10 @@ public class MageTower : MonoBehaviour {
     #endregion
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
+        transform.Rotate(-90f, 0, 0);
     }
 
     /// <summary>
@@ -37,7 +39,7 @@ public class MageTower : MonoBehaviour {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
-        
+
         //Find the nearest enemy computing the distance to each one
         foreach (GameObject enemy in enemies)
         {
@@ -52,7 +54,6 @@ public class MageTower : MonoBehaviour {
         if (nearestEnemy != null && shortestDistance <= range)
         {
             target = nearestEnemy.transform;
-            
         }
         else
         {
@@ -60,7 +61,8 @@ public class MageTower : MonoBehaviour {
         }
     }
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
         //if we don't have a target we do nothing
         if (target == null)
@@ -70,10 +72,11 @@ public class MageTower : MonoBehaviour {
 
         //this is used for rotation, making the tower to look at the target
         Quaternion lookRotation = Quaternion.LookRotation(dir);
-        Vector3 rotation = Quaternion.Lerp(MageTowerUnit.rotation, lookRotation, Time.deltaTime * rotateSpeed ).eulerAngles;
-        MageTowerUnit.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        
+        Vector3 rotation = Quaternion.Lerp(WatchTowerUnit.rotation, lookRotation, Time.deltaTime * rotateSpeed).eulerAngles;
+        WatchTowerUnit.rotation = Quaternion.Euler(-90f, rotation.y, 0f);
 
-        if(fireCountdown <= 0f)
+        if (fireCountdown <= 0f)
         {
             Shoot();
             fireCountdown = 1f / fireRate;
@@ -86,19 +89,18 @@ public class MageTower : MonoBehaviour {
     /// </summary>
     void Shoot()
     {
-        GameObject bulletGO = (GameObject) Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        WeaponType1 bullet = bulletGO.GetComponent<WeaponType1>();
+        GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Arrow arrow = bulletGO.GetComponent<Arrow>();
 
-        if(bullet != null)
+        if (arrow != null)
         {
-            bullet.Seek(target);
+            arrow.Seek(target);
         }
     }
 
-void OnDrawGizmosSelected ()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
     }
 }
-
