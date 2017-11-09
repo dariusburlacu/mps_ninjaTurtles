@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Orc : Enemy {
+public class Lich : Enemy {
 
-    float lifePoints = 200f;
-
+    float lifePoints = 300f;
 }

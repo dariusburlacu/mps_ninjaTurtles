@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,14 +10,25 @@ public class Enemy : MonoBehaviour
 
     //The index of the current point on the path
     private int wavepointIndex = 0;
-    
+
+    public int pathDirection;
     // Use this for initialization
     void Start()
     {
-
-        //we start from the enemy base
-        target = waypoints.points[0];
-        transform.Rotate(Vector3.up, -90, Space.Self);
+        if(pathDirection == 0)
+        {
+            //we start from the first enemy base point
+            target = waypoints.points[0];
+            pathDirection = 0;
+            transform.Rotate(Vector3.up, -90, Space.Self);
+        }
+        else if(pathDirection == 1)
+        {
+            //we start from the second enemy base point
+            target = SecondWavePoints.points[0];
+            pathDirection = 1;
+        }
+        
     }
 
     // Update is called once per frame
@@ -45,35 +54,10 @@ public class Enemy : MonoBehaviour
             //error precision and then i consider to be reached a point when the distance
 
             //between them is lower than 0.2f
-            switch (wavepointIndex)
-            {
-                //For each reaching point i rotate the enemy to the next point
-                case 0:
-                    transform.Rotate(Vector3.up, -90, Space.Self);
-                    break;
-                case 1:
-                    transform.Rotate(Vector3.up, 90, Space.Self);
-                    break;
-                case 2:
-                    transform.Rotate(Vector3.up, 90, Space.Self);
-                    break;
-                case 3:
-                    transform.Rotate(Vector3.up, -90, Space.Self);
-                    break;
-                case 4:
-                    transform.Rotate(Vector3.up, -90, Space.Self);
-                    break;
-                case 5:
-                    transform.Rotate(Vector3.up, 90, Space.Self);
-                    break;
-                case 6:
-                    transform.Rotate(Vector3.up, 90, Space.Self);
-                    break;
-                case 7:
-                    transform.Rotate(Vector3.up, -90, Space.Self);
-                    break;
-            }
-
+            if (pathDirection == 0)
+                firstPathRotation(wavepointIndex);
+            else
+                secondPathRotation(wavepointIndex);
             GetNextWayPoint();
 
         }
@@ -85,16 +69,102 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void GetNextWayPoint()
     {
-        //When an enemy arrives at the destination we destroy it
-        if (wavepointIndex >= waypoints.points.Length - 1)
+        //if the enemy walks on the first path
+        if(pathDirection  == 0)
         {
-            
-            Destroy(gameObject);
-            WaveSwawner.remainedEnemies--;
-            return;
+            //When an enemy arrives at the destination we destroy it
+            if (wavepointIndex >= waypoints.points.Length - 1)
+            {
+
+                Destroy(gameObject);
+                WaveSwawner.remainedEnemies--;
+                return;
+            }
+
+            wavepointIndex++;
+            target = waypoints.points[wavepointIndex];
+        }
+        //if the enemy walks on the second path
+        else if(pathDirection == 1)
+        {
+            //When an enemy arrives at the destination we destroy it
+            if (wavepointIndex >= SecondWavePoints.points.Length - 1)
+            {
+
+                Destroy(gameObject);
+                WaveSwawner.remainedEnemies--;
+                return;
+            }
+            wavepointIndex++;
+            target = SecondWavePoints.points[wavepointIndex];
         }
 
-        wavepointIndex++;
-        target = waypoints.points[wavepointIndex];
+        
+    }
+
+    void firstPathRotation(int wavepointIndex)
+    {
+        switch (wavepointIndex)
+        {
+            //For each reaching point i rotate the enemy to the next point
+            case 0:
+                transform.Rotate(Vector3.up, -90, Space.Self);
+                break;
+            case 1:
+                transform.Rotate(Vector3.up, 90, Space.Self);
+                break;
+            case 2:
+                transform.Rotate(Vector3.up, 90, Space.Self);
+                break;
+            case 3:
+                transform.Rotate(Vector3.up, -90, Space.Self);
+                break;
+            case 4:
+                transform.Rotate(Vector3.up, -90, Space.Self);
+                break;
+            case 5:
+                transform.Rotate(Vector3.up, 90, Space.Self);
+                break;
+            case 6:
+                transform.Rotate(Vector3.up, 90, Space.Self);
+                break;
+            case 7:
+                transform.Rotate(Vector3.up, -90, Space.Self);
+                break;
+        }
+    }
+    void secondPathRotation(int wavepointIndex)
+    {
+        switch (wavepointIndex)
+        {
+            //For each reaching point i rotate the enemy to the next point
+            case 0:
+                transform.Rotate(Vector3.up, -90, Space.Self);
+                break;
+            case 1:
+                transform.Rotate(Vector3.up, -90, Space.Self);
+                break;
+            case 2:
+                transform.Rotate(Vector3.up, 90, Space.Self);
+                break;
+            case 3:
+                transform.Rotate(Vector3.up, -90, Space.Self);
+                break;
+            case 4:
+                transform.Rotate(Vector3.up, 90, Space.Self);
+                break;
+            case 5:
+                transform.Rotate(Vector3.up, 90, Space.Self);
+                break;
+            case 6:
+                transform.Rotate(Vector3.up, -90, Space.Self);
+                break;
+            case 7:
+                transform.Rotate(Vector3.up, -90, Space.Self);
+                break;
+            case 8:
+                transform.Rotate(Vector3.up, 90, Space.Self);
+                break;
+        }
     }
 }

@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class waypoints : MonoBehaviour {
+public class SecondWavePoints : MonoBehaviour {
 
-    //These points represents the static points placed on the first road to the target
+    //These points represents the static points placed on the second road to the target
     public static Transform[] points;
 
     void Awake()
