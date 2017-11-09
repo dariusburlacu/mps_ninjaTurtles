@@ -7,7 +7,7 @@ public class CannonTower : MonoBehaviour {
     public Transform target;
 
     [Header("Attributes")]
-    public float range = DefaultConstants.range;
+    public float range = 40f;
     public float fireRate = 1f;
     private float fireCountdown = 0f;
 
@@ -22,6 +22,8 @@ public class CannonTower : MonoBehaviour {
     public GameObject bulletPrefab;
     public Transform firePoint;
 
+    //Author: Denisa Dumitrica
+    public int value = DefaultConstants.cannonTowerValue;
     #endregion
 
     // Use this for initialization

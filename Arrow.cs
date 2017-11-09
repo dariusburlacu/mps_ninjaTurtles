@@ -63,37 +63,49 @@ public class Arrow : MonoBehaviour {
         if (WaveSwawner.spawnIterator == 1)
         {
             Skeleton temp = target.gameObject.GetComponent<Skeleton>();
-            temp.lifePoints -= arrowPower;
-            if (temp.lifePoints <= 0)
+            temp.skeletonlifePoints -= arrowPower;
+            if (temp.skeletonlifePoints <= 0)
             {
                 Destroy(target.gameObject);
 
                 //Keep the number of the remained enemies for knowing the current level state
                 WaveSwawner.remainedEnemies--;
+
+                //Author:Denisa Dumitrica
+                //Add money on dead enemy
+                Currency.money += temp.value;
             }
         }
         else if (WaveSwawner.spawnIterator == 2)
         {
             Orc temp = target.gameObject.GetComponent<Orc>();
-            temp.lifePoints -= arrowPower;
-            if (temp.lifePoints <= 0)
+            temp.orclifePoints -= arrowPower;
+            if (temp.orclifePoints <= 0)
             {
                 Destroy(target.gameObject);
 
                 //Keep the number of the remained enemies for knowing the current level state
                 WaveSwawner.remainedEnemies--;
+
+                //Author:Denisa Dumitrica
+                //Add money on dead enemy
+                Currency.money += temp.value;
             }
         }
         else if (WaveSwawner.spawnIterator == 3)
         {
             Lich temp = target.gameObject.GetComponent<Lich>();
-            temp.lifePoints -= arrowPower;
-            if (temp.lifePoints <= 0)
+            temp.lichlifePoints -= arrowPower;
+            if (temp.lichlifePoints <= 0)
             {
                 Destroy(target.gameObject);
 
                 //Keep the number of the remained enemies for knowing the current level state
                 WaveSwawner.remainedEnemies--;
+
+                //Author:Denisa Dumitrica
+                //Add money on dead enemy
+                Currency.money += temp.value;
             }
         }
     }

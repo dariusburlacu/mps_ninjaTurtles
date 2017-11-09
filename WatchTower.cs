@@ -22,6 +22,8 @@ public class WatchTower : MonoBehaviour {
     public GameObject bulletPrefab;
     public Transform firePoint;
 
+    //Author: Denisa Dumitrica
+    public int value = DefaultConstants.watchTowerValue;
     #endregion
 
     // Use this for initialization
