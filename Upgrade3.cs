@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponType1 : MonoBehaviour
-{
+/// <summary>
+/// Author: Denisa Dumitrica
+/// </summary>
+public class Upgrade3 : MonoBehaviour {
 
     private Transform target;
-    public float speed = DefaultConstants.bulletSpeed;
-    public float bulletPower = DefaultConstants.missilePower;
+    public float speed = DefaultConstants.upgrade3Speed;
+    public float bulletPower = DefaultConstants.upgrade3Power;
     public GameObject bulletImpactEffect;
-
-    
 
     public void Seek(Transform _target)
     {
@@ -30,7 +30,7 @@ public class WeaponType1 : MonoBehaviour
         Vector3 temp = target.position;
         temp.y = 8f;
         Vector3 dir = temp - transform.position;
-        
+
         //compute the distance, the bullet is moving this frame
         float distanceThisFrame = speed * Time.deltaTime;
 
@@ -41,14 +41,14 @@ public class WeaponType1 : MonoBehaviour
             HitTarget();
             return;
         }
-        
+
         transform.Translate(dir.normalized * distanceThisFrame, Space.World);
     }
 
     void HitTarget()
     {
         //instantiate the bullet effect and get reference of it for cleaning up
-        GameObject effectInstance = (GameObject) Instantiate(bulletImpactEffect, transform.position, transform.rotation);
+        GameObject effectInstance = (GameObject)Instantiate(bulletImpactEffect, transform.position, transform.rotation);
         Destroy(effectInstance, 2f);
 
         //Destroy bullet
