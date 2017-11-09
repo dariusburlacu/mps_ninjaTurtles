@@ -51,11 +51,51 @@ public class WeaponType1 : MonoBehaviour
         
         //Destroy bullet
         Destroy(gameObject);
+        DamageEnemy();
+    }
 
+    /// <summary>
+    /// Author:Andreea-Camelia Patru
+    /// This function applies damage depending on enemy type
+    /// </summary>
+    public void DamageEnemy()
+    {
         //Destroy enemy when it runs out of life
-        Destroy(target.gameObject);
+        if (WaveSwawner.spawnIterator == 1)
+        {
+            Skeleton temp = target.gameObject.GetComponent<Skeleton>();
+            temp.lifePoints -= bulletPower;
+            if (temp.lifePoints <= 0)
+            {
+                Destroy(target.gameObject);
 
-        //Keep the number of the remained enemies for knowing the current level state
-        WaveSwawner.remainedEnemies--;
+                //Keep the number of the remained enemies for knowing the current level state
+                WaveSwawner.remainedEnemies--;
+            }
+        }
+        else if (WaveSwawner.spawnIterator == 2)
+        {
+            Orc temp = target.gameObject.GetComponent<Orc>();
+            temp.lifePoints -= bulletPower;
+            if (temp.lifePoints <= 0)
+            {
+                Destroy(target.gameObject);
+
+                //Keep the number of the remained enemies for knowing the current level state
+                WaveSwawner.remainedEnemies--;
+            }
+        }
+        else if (WaveSwawner.spawnIterator == 3)
+        {
+            Lich temp = target.gameObject.GetComponent<Lich>();
+            temp.lifePoints -= bulletPower;
+            if (temp.lifePoints <= 0)
+            {
+                Destroy(target.gameObject);
+
+                //Keep the number of the remained enemies for knowing the current level state
+                WaveSwawner.remainedEnemies--;
+            }
+        }
     }
 }
