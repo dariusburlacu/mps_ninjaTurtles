@@ -13,7 +13,7 @@ public class BuildManager : MonoBehaviour {
     public GameObject mageTower;
     public GameObject watchTower;
     public GameObject cannonTower;
-
+    public GameObject character;
 
     /// <summary>
     /// this method retrieves the build manager instance to be used
@@ -31,6 +31,17 @@ public class BuildManager : MonoBehaviour {
     public void SetTowerToBuild(GameObject towerType)
     {
         towerToBuild = towerType;
+    }
+
+    /// <summary>
+    /// Author: Andreea-Camelia Patru
+    /// </summary>
+    public void UseCharacter()
+    {
+        if (WaveSwawner.levelState == false)
+        {
+            fpsCharacterController.used = true;
+        }
     }
 
     public GameObject GetTowerToBuild()
