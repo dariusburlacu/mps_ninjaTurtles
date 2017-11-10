@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class Lich : Enemy {
 
-    float lifePoints = 300f;
+    public int value = DefaultConstants.lichValue;
+    
 }

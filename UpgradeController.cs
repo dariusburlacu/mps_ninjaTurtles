@@ -16,6 +16,7 @@ public class UpgradeController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
         if (LifeController.life > 0)
         {
             //if U key is pressed and upgrade is active and we are no playing a level, we deactivate the upgrade mood

@@ -71,6 +71,7 @@ public class MageTower : MonoBehaviour {
     }
     // Update is called once per frame
     void Update () {
+
         //Author:Denisa Dumitrica
         //If  upgrade is turned on, and this mage tower is cliked we try to upgrade it
         if (Input.GetButtonDown("Fire1") && UpgradeController.upgradeActive == true)
@@ -88,6 +89,15 @@ public class MageTower : MonoBehaviour {
                 Currency.money -= DefaultConstants.upgrade3Value;
             }
         }
+        if (LifeController.life <= 0)
+        {
+            //do nothing
+        }
+        else
+        {
+            //if we don't have a target we do nothing
+            if (target == null)
+                return;
 
         //if we don't have a target we do nothing
         if (target == null)
@@ -95,16 +105,20 @@ public class MageTower : MonoBehaviour {
 
             Vector3 dir = target.position - transform.position;
 
-        //this is used for rotation, making the tower to look at the target
-        Quaternion lookRotation = Quaternion.LookRotation(dir);
-        Vector3 rotation = Quaternion.Lerp(MageTowerUnit.rotation, lookRotation, Time.deltaTime * rotateSpeed ).eulerAngles;
-        MageTowerUnit.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+            //this is used for rotation, making the tower to look at the target
+            Quaternion lookRotation = Quaternion.LookRotation(dir);
+            Vector3 rotation = Quaternion.Lerp(MageTowerUnit.rotation, lookRotation, Time.deltaTime * rotateSpeed).eulerAngles;
+            MageTowerUnit.rotation = Quaternion.Euler(0f, rotation.y, 0f);
 
-        if(fireCountdown <= 0f)
-        {
-            Shoot();
-            fireCountdown = 1f / fireRate;
+            if (fireCountdown <= 0f)
+            {
+                Shoot();
+                fireCountdown = 1f / fireRate;
+            }
+            fireCountdown -= Time.deltaTime;
         }
+    }
+
         fireCountdown -= Time.deltaTime;
 
     }

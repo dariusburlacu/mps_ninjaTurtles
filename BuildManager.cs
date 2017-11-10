@@ -15,6 +15,9 @@ public class BuildManager : MonoBehaviour {
     public GameObject cannonTower;
     public GameObject character;
 
+    public int type = 0;
+
+
     /// <summary>
     /// this method retrieves the build manager instance to be used
     /// </summary>
@@ -40,8 +43,17 @@ public class BuildManager : MonoBehaviour {
     {
         if (WaveSwawner.levelState == false)
         {
+
+            if (Currency.money - DefaultConstants.characterValue >= 0)
+            {
+                Currency.money -= DefaultConstants.characterValue;
+                fpsCharacterController.used = true;
+            }
+        }
+        
             fpsCharacterController.used = true;
         }
+
     }
 
     public GameObject GetTowerToBuild()

@@ -2,5 +2,7 @@
 
 public class Skeleton : Enemy
 {
-    float lifePoints = 100f;
+    public int value = DefaultConstants.skeletonValue;
+
+    
 }
