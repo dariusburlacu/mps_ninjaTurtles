@@ -50,11 +50,63 @@ public class Arrow : MonoBehaviour {
 
         //Destroy bullet
         Destroy(gameObject);
+        DamageEnemy();
+    }
 
+    /// <summary>
+    /// Author:Andreea-Camelia Patru
+    /// This function applies damage depending on enemy type
+    /// </summary>
+    public void DamageEnemy()
+    {
         //Destroy enemy when it runs out of life
-        Destroy(target.gameObject);
+        if (WaveSwawner.spawnIterator == 1)
+        {
+            Skeleton temp = target.gameObject.GetComponent<Skeleton>();
+            temp.skeletonlifePoints -= arrowPower;
+            if (temp.skeletonlifePoints <= 0)
+            {
+                Destroy(target.gameObject);
 
-        //Keep the number of the remained enemies for knowing the current level state
-        WaveSwawner.remainedEnemies--;
+                //Keep the number of the remained enemies for knowing the current level state
+                WaveSwawner.remainedEnemies--;
+
+                //Author:Denisa Dumitrica
+                //Add money on dead enemy
+                Currency.money += temp.value;
+            }
+        }
+        else if (WaveSwawner.spawnIterator == 2)
+        {
+            Orc temp = target.gameObject.GetComponent<Orc>();
+            temp.orclifePoints -= arrowPower;
+            if (temp.orclifePoints <= 0)
+            {
+                Destroy(target.gameObject);
+
+                //Keep the number of the remained enemies for knowing the current level state
+                WaveSwawner.remainedEnemies--;
+
+                //Author:Denisa Dumitrica
+                //Add money on dead enemy
+                Currency.money += temp.value;
+            }
+        }
+        else if (WaveSwawner.spawnIterator == 3)
+        {
+            Lich temp = target.gameObject.GetComponent<Lich>();
+            temp.lichlifePoints -= arrowPower;
+            if (temp.lichlifePoints <= 0)
+            {
+                Destroy(target.gameObject);
+
+                //Keep the number of the remained enemies for knowing the current level state
+                WaveSwawner.remainedEnemies--;
+
+                //Author:Denisa Dumitrica
+                //Add money on dead enemy
+                Currency.money += temp.value;
+            }
+        }
     }
 }

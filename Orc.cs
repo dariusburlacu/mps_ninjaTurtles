@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Orc : Enemy {
 
-    float lifePoints = 200f;
+    public int value = DefaultConstants.orcValue;
 
+   
 }
+

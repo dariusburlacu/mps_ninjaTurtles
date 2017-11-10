@@ -13,6 +13,8 @@ public class TowerPlace : MonoBehaviour {
 
     BuildManager buildManager;
 
+    //Author:Denisa Dumitrica
+    public GameObject playerCurrency;
     void Start ()
     {
         //Here we save the tower place color
@@ -35,8 +37,49 @@ public class TowerPlace : MonoBehaviour {
         }
         if (ShopController.activeFlag == true)
         {
-            GameObject towerToBuild = buildManager.GetTowerToBuild();
-            tower = (GameObject)Instantiate(towerToBuild, transform.position, transform.rotation);
+
+            //Author:Denisa Dumitrica
+            //Substract the tower value from our amount of money
+            if(buildManager.type == 1)
+            {
+                if(Currency.money - DefaultConstants.mageTowerValue < 0)
+                {
+                    //do nothing
+                    
+                }
+                else if (Currency.money - DefaultConstants.mageTowerValue >= 0)
+                {
+                    Currency.money -= DefaultConstants.mageTowerValue;
+                    GameObject towerToBuild = buildManager.GetTowerToBuild();
+                    tower = (GameObject)Instantiate(towerToBuild, transform.position, transform.rotation);
+                }
+            }
+            else if (buildManager.type == 2)
+            {
+                if (Currency.money - DefaultConstants.watchTowerValue < 0)
+                {
+                    //do nothing
+                }
+                else if (Currency.money - DefaultConstants.watchTowerValue >= 0)
+                {
+                    Currency.money -= DefaultConstants.watchTowerValue;
+                    GameObject towerToBuild = buildManager.GetTowerToBuild();
+                    tower = (GameObject)Instantiate(towerToBuild, transform.position, transform.rotation);
+                }
+            }
+            else if (buildManager.type == 3)
+            {
+                if (Currency.money - DefaultConstants.cannonTowerValue < 0)
+                {
+                    //do nothing
+                }
+                else if (Currency.money - DefaultConstants.cannonTowerValue >= 0)
+                {
+                    Currency.money -= DefaultConstants.cannonTowerValue;
+                    GameObject towerToBuild = buildManager.GetTowerToBuild();
+                    tower = (GameObject)Instantiate(towerToBuild, transform.position, transform.rotation);
+                }
+            }
         }
     }
 

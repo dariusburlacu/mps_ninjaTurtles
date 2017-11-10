@@ -3,8 +3,10 @@
 public class Enemy : MonoBehaviour
 {
 
-    public float speed = 10f;
-
+    public float speed;
+    public float skeletonlifePoints;
+    public float orclifePoints;
+    public float lichlifePoints;
     //Target that must be reached
     private Transform target;
 
@@ -15,7 +17,12 @@ public class Enemy : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if(pathDirection == 0)
+        speed = DefaultConstants.enemySpeed;
+        orclifePoints = DefaultConstants.orcLife;
+        lichlifePoints = DefaultConstants.lichLife;
+        skeletonlifePoints = DefaultConstants.skeletonLife;
+
+        if (pathDirection == 0)
         {
             //we start from the first enemy base point
             target = waypoints.points[0];
@@ -59,7 +66,6 @@ public class Enemy : MonoBehaviour
             else
                 secondPathRotation(wavepointIndex);
             GetNextWayPoint();
-
         }
 
     }
@@ -78,6 +84,9 @@ public class Enemy : MonoBehaviour
 
                 Destroy(gameObject);
                 WaveSwawner.remainedEnemies--;
+
+                //Author: Denisa Dumitrica
+                LifeController.life -= DefaultConstants.BaseDamage;
                 return;
             }
 
@@ -93,13 +102,14 @@ public class Enemy : MonoBehaviour
 
                 Destroy(gameObject);
                 WaveSwawner.remainedEnemies--;
+
+                //Author: Denisa Dumitrica
+                LifeController.life -= DefaultConstants.BaseDamage;
                 return;
             }
             wavepointIndex++;
             target = SecondWavePoints.points[wavepointIndex];
         }
-
-        
     }
 
     void firstPathRotation(int wavepointIndex)
