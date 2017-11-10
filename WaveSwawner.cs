@@ -40,17 +40,34 @@ public class WaveSwawner : MonoBehaviour {
         spawnIterator = 0;
         specialEnemyRender = false;
         number = DefaultConstants.waveNumber;
+
     }
     #region Functions
     void Update()
     {
+
         //Author: Denisa Dumitirca
         if (LifeController.life <= 0)
+
+        //Author:Andreea-Camelia Patru
+        //Here we reset the enemy spawn type and we upgrade the difficulty
+        //after three levels have been played
+        if (remainedEnemies == 0 && spawnIterator == 3)
+        {
+            spawnIterator = 0;
+            UpdateDifficulty();
+        }
+
+        //if the level is active and the last enemy dies i stop the current level
+        //and i set the next one
+        if (remainedEnemies == 0 && levelState == true)
+
         {
             levelSelector.text = "Game Over";
         }
         else
         {
+
             //Author:Andreea-Camelia Patru
             //Here we reset the enemy spawn type and we upgrade the difficulty
             //after three levels have been played
@@ -59,6 +76,44 @@ public class WaveSwawner : MonoBehaviour {
                 spawnIterator = 0;
                 UpdateDifficulty();
             }
+
+            //i display the level number and o start the current level
+            levelSelector.text = "Level " + level.ToString();
+            levelState = true;
+
+
+            //Author :Andreea-Camelia Patru
+            //This is used to generate the enemy type on each level
+            spawnIterator++;
+
+            /// <summary>
+            /// Author: Andreea-Camelia Patru
+            /// we mark that the vel started and that the character which is currently use will
+            /// become unavailable at the end of the level
+            /// </summary>
+            if (fpsCharacterController.timeToUse == 1)
+            {
+                fpsCharacterController.timeToUse = 2;
+            }
+
+            //coroutine is a function that has the ability to pause
+            //execution and return control to Unity
+            //but then to continue where it left off on the following frame
+            //(Hint for others: it can be used to apply an animation in a single frame)
+            remainedEnemies = 10;
+            StartCoroutine(SpawnWave());
+            countdown = timeBetweenWaves;
+        }
+
+        /// <summary>
+        /// Author: Andreea-Camelia Patru
+        /// We mark that the character is used and that it will be available only this level
+        /// </summary>
+        if (levelState == false && fpsCharacterController.used == true && fpsCharacterController.timeToUse == 0)
+        {
+            fpsCharacterController.timeToUse = 1;
+        }
+
 
             //if the level is active and the last enemy dies i stop the current level
             //and i set the next one
@@ -161,17 +216,23 @@ public class WaveSwawner : MonoBehaviour {
         }
     }
 
-   
+
 
     /// <summary>
     /// Author: Andreea-Camelia Patru
     /// </summary>
     public void UpdateDifficulty()
     {
+
         DefaultConstants.skeletonLife += 60f;
         DefaultConstants.lichLife += 80f;
         DefaultConstants.orcLife += 60f;
         DefaultConstants.enemySpeed += 4f;
+
+        DefaultConstants.skeletonLife += 20f;
+        DefaultConstants.lichLife += 30f;
+        DefaultConstants.orcLife += 25f;
+        DefaultConstants.enemySpeed += 2f;
     }
 }
     #endregion functions
@@ -180,7 +241,11 @@ public static class DefaultConstants
 {
     public static float timeBetweenWaves = 20f;
     public static float countdown = 10f;
+
     public static int waveNumber = 12;
+
+    public static int waveNumber = 10;
+  
     public static float range = 30f;
 
     public static float rotateSpeed = 10f;
@@ -221,6 +286,7 @@ public static class DefaultConstants
     public static float orcLife = 100f;
     public static float lichLife = 170f;
 
+
     public static float enemySpeed = 10f;
     public static int BaseDamage = 50;
 
@@ -228,5 +294,29 @@ public static class DefaultConstants
     public static int specialEnemyValue = 50;
     public static float specialEnemyPower = 50f;
     public static float specialEnemySpeed = 15f;
+
+
+    public static float mageTowerLife = 100f;
+    public static float watchTowerLife = 150f;
+    public static float cannonTowerLife = 200f;
+
+    public static int mageTowerValue = 100;
+    public static int watchTowerValue = 150;
+    public static int cannonTowerValue = 200;
+
+    public static float arrowPower = 25f;
+    public static float missilePower = 50f;
+    public static float weaponType3Power = 100f;
+
+    public static float characterMovementMultiplier = 7;
+    public static float characterSpeed = 5f;
+    public static float characterSensitivity = 4f;
+    public static float characterWeaponPower = 200f;
+
+    public static float skeletonLife = 75f;
+    public static float orcLife = 125f;
+    public static float lichLife = 200f;
+
+    public static float enemySpeed = 10f;
 
 }

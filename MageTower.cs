@@ -71,7 +71,7 @@ public class MageTower : MonoBehaviour {
     }
     // Update is called once per frame
     void Update () {
-       
+
         //Author:Denisa Dumitrica
         //If  upgrade is turned on, and this mage tower is cliked we try to upgrade it
         if (Input.GetButtonDown("Fire1") && UpgradeController.upgradeActive == true)
@@ -99,6 +99,10 @@ public class MageTower : MonoBehaviour {
             if (target == null)
                 return;
 
+        //if we don't have a target we do nothing
+        if (target == null)
+            return;
+
             Vector3 dir = target.position - transform.position;
 
             //this is used for rotation, making the tower to look at the target
@@ -113,6 +117,10 @@ public class MageTower : MonoBehaviour {
             }
             fireCountdown -= Time.deltaTime;
         }
+    }
+
+        fireCountdown -= Time.deltaTime;
+
     }
 
         /// <summary>

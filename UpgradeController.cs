@@ -16,7 +16,9 @@ public class UpgradeController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-      
+
+        if (LifeController.life > 0)
+        {
             //if U key is pressed and upgrade is active and we are no playing a level, we deactivate the upgrade mood
             if (Input.GetKeyDown(KeyCode.U) && upgradeActive == true && WaveSwawner.levelState == false)
             {
@@ -41,7 +43,7 @@ public class UpgradeController : MonoBehaviour {
                 upgradeActive = false;
                 upgradeActiveScreen.text = "Upgrade off";
             }
-       
+        }
     }
 
 }
